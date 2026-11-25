@@ -13,6 +13,13 @@ class Sprite {
 
   int get genislik => satirlar.fold(0, (m, s) => s.length > m ? s.length : m);
   int get yukseklik => satirlar.length;
+
+  // Çizimde geçip palette karşılığı olmayan karakterler.
+  Set<String> get tanimsiz => {
+        for (final satir in satirlar)
+          for (final c in satir.split(''))
+            if (c != '.' && !palet.containsKey(c)) c
+      };
 }
 
 Sprite oku(String metin) {
@@ -66,6 +73,9 @@ void main(List<String> args) {
   }
   final olcek = args.length > 2 ? int.parse(args[2]) : 16;
   final sprite = oku(File(args[0]).readAsStringSync());
+  if (sprite.tanimsiz.isNotEmpty) {
+    stderr.writeln('Uyarı: palette olmayan karakterler boş bırakıldı: ${sprite.tanimsiz.join(' ')}');
+  }
   final zemin = args.length > 3 ? args[3] : null;
   File(args[1]).writeAsStringSync(svg(sprite, olcek, zemin: zemin));
   stdout.writeln('${args[1]}: ${sprite.genislik}x${sprite.yukseklik}, ${sprite.palet.length} renk');
