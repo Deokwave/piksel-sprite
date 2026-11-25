@@ -6,4 +6,6 @@ Avatarları ve küçük ikonları önce düz metin olarak çiziyoruz: her karakt
 dart run bin/piksel_sprite.dart ornek/dalga.txt dalga.svg 16
 ```
 
+`ornek` klasöründe iki örnek var: Deokwave dalgası (`dalga.txt`) ve bir kalp (`kalp.txt`). Palet satırlarının ve çizimin nasıl yazıldığını görmek için onlara bakabilirsin.
+
 © 2026 Deokwave. Tüm hakları saklıdır.

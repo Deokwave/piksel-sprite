@@ -1,0 +1,17 @@
+# Kalp
+K=#2a0d1f
+R=#e8455f
+r=#b02a4a
+W=#ffd6de
+---
+..KKK...KKK..
+.KRRRK.KRRRK.
+KRWWRRKRRRRrK
+KRWRRRRRRRRrK
+KRRRRRRRRRRrK
+.KRRRRRRRRrK.
+..KRRRRRRrK..
+...KRRRRrK...
+....KRRrK....
+.....KrK.....
+......K......
