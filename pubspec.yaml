@@ -1,0 +1,7 @@
+name: piksel_sprite
+description: Metin olarak çizilmiş sprite'ları SVG'ye çevirir.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ^3.0.0
