@@ -1,5 +1,5 @@
 // Metin olarak çizilmiş bir sprite'ı keskin kenarlı SVG'ye çevirir.
-// Kullanım: dart run bin/piksel_sprite.dart girdi.txt cikti.svg [olcek]
+// Kullanım: dart run bin/piksel_sprite.dart girdi.txt cikti.svg [olcek] [zemin]
 //
 // Dosya biçimi: önce "K=#140e22" gibi palet satırları, sonra "---",
 // sonra her karakterin bir piksel olduğu çizim. "." boş piksel demek.
@@ -36,7 +36,7 @@ Sprite oku(String metin) {
   return Sprite(palet, satirlar);
 }
 
-String svg(Sprite s, int olcek) {
+String svg(Sprite s, int olcek, {String? zemin}) {
   final yollar = <String, StringBuffer>{};
   for (var y = 0; y < s.yukseklik; y++) {
     final satir = s.satirlar[y];
@@ -53,18 +53,20 @@ String svg(Sprite s, int olcek) {
       x = son;
     }
   }
-  final govde = yollar.entries.map((e) => '<path fill="${s.palet[e.key]}" d="${e.value}"/>').join();
+  final arka = zemin == null ? '' : '<rect width="${s.genislik}" height="${s.yukseklik}" fill="$zemin"/>';
+  final govde = arka + yollar.entries.map((e) => '<path fill="${s.palet[e.key]}" d="${e.value}"/>').join();
   return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${s.genislik} ${s.yukseklik}" '
       'width="${s.genislik * olcek}" height="${s.yukseklik * olcek}" shape-rendering="crispEdges">$govde</svg>';
 }
 
 void main(List<String> args) {
   if (args.length < 2) {
-    stderr.writeln('Kullanım: dart run bin/piksel_sprite.dart girdi.txt cikti.svg [olcek]');
+    stderr.writeln('Kullanım: dart run bin/piksel_sprite.dart girdi.txt cikti.svg [olcek] [zemin]');
     exit(64);
   }
   final olcek = args.length > 2 ? int.parse(args[2]) : 16;
   final sprite = oku(File(args[0]).readAsStringSync());
-  File(args[1]).writeAsStringSync(svg(sprite, olcek));
+  final zemin = args.length > 3 ? args[3] : null;
+  File(args[1]).writeAsStringSync(svg(sprite, olcek, zemin: zemin));
   stdout.writeln('${args[1]}: ${sprite.genislik}x${sprite.yukseklik}, ${sprite.palet.length} renk');
 }
